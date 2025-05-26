@@ -1,0 +1,31 @@
+  id: 266
+  name: "On/Off Plug in Unit"
+  vendorRestricted:
+    - Eve Systems
+  sources:
+    - category: "ELECTRICITY_METER_AC"
+      id: "eve-energy-main"
+      datapoints:
+        - id: "VOLTAGE"
+          attributePath: "1/319486977/319422472"
+          description: "AC Voltage"
+          unitOfMeasurement: "V"
+
+        - id: "CURRENT"
+          attributePath: "1/319486977/319422473"
+          description: "AC Current"
+          unitOfMeasurement: "A"
+
+        - id: "WATT"
+          attributePath: "1/319486977/319422474"
+          description: "AC Watt"
+          unitOfMeasurement: "W"
+
+        - id: "WATT_ACCUMULATED"
+          attributePath: "1/319486977/319422475"
+          description: "AC Watt accumulated"
+          unitOfMeasurement: "Wh"
+
+      controlpoints:
+        - id: "TOGGLE"
+          attributePath: "1/6/0"

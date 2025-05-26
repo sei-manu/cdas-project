@@ -1,0 +1,45 @@
+
+scalar DateTime
+    @specifiedBy(url: "https://scalars.graphql.org/andimarek/date-time.html")
+
+type Query {
+    rooms: [Room!]!,
+    deviceData(deviceId: ID, datapointId: ID, from: DateTime, to: DateTime): [DeviceData!]!
+}
+
+type Subscription {
+    onDeviceData(deviceId: ID): DeviceData
+    onDatapointData(datapointId: ID): DeviceData
+}
+
+type Room {
+    id: ID!
+    name: String!
+    description: String
+    devices: [Device]
+}
+
+type Device {
+    id: ID!
+    name: String
+    type: String
+    datapoints: [Datapoint]
+    data(from: DateTime, to: DateTime): [DeviceData!]
+}
+
+type Datapoint {
+    attributePath: ID!
+    description: String
+    type: String
+    unitOfMeasurement: String
+    data(from: DateTime, to: DateTime): [DeviceData!]!
+}
+
+type DeviceData {
+    deviceId: ID!
+    attributePath: ID!
+    stringValue: String
+    numericValue: Float
+    timestamp: DateTime
+    unitOfMeasurement: String
+}

@@ -1,0 +1,38 @@
+services:
+
+  # python-matter-server
+  matter-server:
+    image: ghcr.io/home-assistant-libs/python-matter-server:stable
+    container_name: matter-server
+    restart: unless-stopped
+    # Required for mDNS to work correctly
+    network_mode: host # only works on linux
+    security_opt:
+      # Needed for Bluetooth via dbus
+      - apparmor:unconfined
+    volumes:
+      # Create an .env file that sets the USERDIR environment variable.
+      - /Users/manuelseifriedsberger/Documents/FH/Master/general/docker/matter-server/data:/data/
+      # Required for Bluetooth via D-Bus
+      - /run/dbus:/run/dbus:ro
+    ports:
+      - "5580:5580"
+    # If you adjust command line, make sure to pass the default CMD arguments too:
+    command: "--log-level debug"
+    #--storage-path /data --paa-root-cert-dir /data/credentials --bluetooth-adapter 0
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg17
+    container_name: timescaledb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5433:5432"
+    # volumes:
+    #  - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+#volumes:
+#  postgres_data:
