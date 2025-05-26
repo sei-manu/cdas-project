@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cdas-project
+  namespace: cdas-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cdas-project
+  template:
+    metadata:
+      labels:
+        app: cdas-project
+    spec:
+      containers:
+        - name: matter-service
+          image: seimanu/matter-service:latest
+          ports:
+          - containerPort: 8080
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: "prod"

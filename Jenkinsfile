@@ -7,8 +7,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = "seimanu/matter-service:${BUILD_NUMBER}"
-        // KUBE_CONTEXT = 'my-kube-context'
+        DOCKER_IMAGE_NAME = "seimanu/matter-service"
     }
 
     triggers {
@@ -38,9 +37,10 @@ pipeline {
             steps {
                 dir('matter-service') {
                     script {
-                        sh "docker build -t $DOCKER_IMAGE ."
+                        sh "docker build -t $DOCKER_IMAGE_NAME:${BUILD_NUMBER} -t $DOCKER_IMAGE_NAME:latest ."
                         withDockerRegistry([credentialsId: 'dockerhub-creds']) {
-                            sh "docker push $DOCKER_IMAGE"
+                            sh "docker push $DOCKER_IMAGE_NAME:${BUILD_NUMBER}"
+                            sh "docker push $DOCKER_IMAGE_NAME:latest"
                         }
                     }
                 }
@@ -51,14 +51,18 @@ pipeline {
             steps {
                 echo "Deploying to Kubernetes..."
                 // sh "kubectl --context $KUBE_CONTEXT apply -f k8s/deployment.yaml"
+                sh """
+                kubectl apply -f k8s/deployment.yaml
+                kubectl set image deployment/matter-service matter-service=$DOCKER_IMAGE_NAME:latest --namespace cdas-project
+                """
             }
         }
     }
 
-    post {
-        failure {
-            echo "Deployment failed. Rolling back..."
-            sh 'kubectl rollout undo deployment/matter-service'
-        }
-    }
+    // post {
+    //     failure {
+    //         echo "Deployment failed. Rolling back..."
+    //         sh 'kubectl rollout undo deployment/matter-service'
+    //     }
+    // }
 }
