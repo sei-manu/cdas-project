@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: '4b190375-bf65-4746-b2d8-ee24a916ebc3', url: 'https://github.com/sei-manu/cdas-project.git'
+                git credentialsId: 'github-creds', url: 'https://github.com/sei-manu/cdas-project.git'
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
                 dir('matter-service') {
                     script {
                         sh "docker build -t $DOCKER_IMAGE ."
-                        withDockerRegistry([credentialsId: '89c50cde-5b56-48e7-9204-dbeb99868623']) {
+                        withDockerRegistry([credentialsId: 'dockerhub-creds']) {
                             sh "docker push $DOCKER_IMAGE"
                         }
                     }

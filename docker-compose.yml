@@ -1,6 +1,7 @@
 services:
   jenkins:
-    image: jenkins/jenkins:lts
+    # image: jenkins/jenkins:lts#
+    build: .
     container_name: jenkins
     privileged: true  # Needed to access Docker daemon safely
     user: root
