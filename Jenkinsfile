@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-        image 'jenkins-agent:ci'
+        image 'seimanu/jenkins-agent:ci'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
@@ -25,6 +25,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building..."
+                sh 'docker --version'
             }
         }
         stage('Test') {
