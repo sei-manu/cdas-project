@@ -2,7 +2,7 @@
 FROM gradle:8.5-jdk21 AS builder
 WORKDIR /app
 
-COPY build.gradle.kts settings.gradle.kts gradle.properties ./
+COPY build.gradle.kts settings.gradle.kts ./
 COPY gradle ./gradle
 
 RUN gradle --no-daemon dependencies
