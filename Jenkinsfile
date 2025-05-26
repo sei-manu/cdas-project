@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main' credentialsId: 'github-creds', url: 'https://github.com/sei-manu/cdas-project.git'
+                git branch: 'main', credentialsId: 'github-creds', url: 'https://github.com/sei-manu/cdas-project.git'
             }
         }
 
