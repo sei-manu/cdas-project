@@ -2,13 +2,13 @@ pipeline {
     agent {
         docker {
             image 'seimanu/jenkins-agent:ci'
-            args '--network=host -v /var/run/docker.sock:/var/run/docker.sock'
+            args '--network=host -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.kube:/home/jenkins/.kube -v $HOME/.minikube:/home/jenkins/.minikube'
         }
     }
 
     environment {
         DOCKER_IMAGE_NAME = "seimanu/matter-service"
-        KUBECONFIG = '/k8s/jenkins-kubeconfig'
+        KUBECONFIG = '/home/jenkins/.kube/config'
     }
     triggers {
         pollSCM '* * * * *'
