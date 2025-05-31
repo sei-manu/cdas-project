@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE_NAME = "seimanu/matter-service"
-        KUBECONFIG = "${WORKSPACE}/k8s/jenkins-kubeconfig.yaml"
+        credentials('my-kubeconfig')
     }
     triggers {
         pollSCM '* * * * *'
