@@ -3,14 +3,14 @@ services:
     # image: jenkins/jenkins:lts#
     build: .
     container_name: jenkins
-    privileged: true  # Needed to access Docker daemon safely
+    privileged: true
     user: root
     ports:
       - "8090:8080"
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock  # Mount Docker socket
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - jenkins
 

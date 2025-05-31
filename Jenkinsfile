@@ -1,15 +1,15 @@
 pipeline {
     agent {
         docker {
-        image 'seimanu/jenkins-agent:ci'
-        args '-v /var/run/docker.sock:/var/run/docker.sock'
+            image 'seimanu/jenkins-agent:ci'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
     environment {
         DOCKER_IMAGE_NAME = "seimanu/matter-service"
+        KUBECONFIG = '/k8s/jenkins-kubeconfig'
     }
-
     triggers {
         pollSCM '* * * * *'
     }
@@ -58,11 +58,4 @@ pipeline {
             }
         }
     }
-
-    // post {
-    //     failure {
-    //         echo "Deployment failed. Rolling back..."
-    //         sh 'kubectl rollout undo deployment/matter-service'
-    //     }
-    // }
 }
