@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'seimanu/jenkins-agent:ci'
-            args '--network=host -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.kube:/home/jenkins/.kube -v $HOME/.minikube:/home/jenkins/.minikube'
+            args '--network=host -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
