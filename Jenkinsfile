@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'seimanu/jenkins-agent:ci'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            args '--network=host -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
@@ -21,6 +21,15 @@ pipeline {
             }
         }
 
+        stage('Debug Kubeconfig') {
+            steps {
+                sh """
+                echo "KUBECONFIG: \$KUBECONFIG"
+                kubectl config view
+                kubectl get nodes
+                """
+            }
+        }
         stage('Build') {
             steps {
                 echo "Building..."
@@ -53,7 +62,7 @@ pipeline {
                 // sh "kubectl --context $KUBE_CONTEXT apply -f k8s/deployment.yaml"
                 sh """
                 kubectl apply -f k8s/deployment.yaml
-                kubectl set image deployment/matter-service matter-service=$DOCKER_IMAGE_NAME:latest --namespace cdas-project
+                kubectl set image deployment/cdas-project matter-service=$DOCKER_IMAGE_NAME:latest --namespace cdas-project
                 """
             }
         }
