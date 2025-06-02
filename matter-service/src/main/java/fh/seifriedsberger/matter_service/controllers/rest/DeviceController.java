@@ -84,6 +84,11 @@ public class DeviceController {
         }
 
     }
+    
+    @GetMapping("/test")
+    public String testEndpoint() {
+        return "DeviceController is working!";
+    }
 
     private MatterDeviceConfigResource deviceConfigToResource(MatterDeviceConfig matterDeviceConfig) {
         return new MatterDeviceConfigResource(
