@@ -56,15 +56,15 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
-            steps {
-                echo "Deploying to Kubernetes..."
-                // sh "kubectl --context $KUBE_CONTEXT apply -f k8s/deployment.yaml"
-                sh """
-                kubectl apply -f k8s/deployment.yaml
-                kubectl set image deployment/cdas-project matter-service=$DOCKER_IMAGE_NAME:latest --namespace cdas-project
-                """
-            }
-        }
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         echo "Deploying to Kubernetes..."
+        //         // sh "kubectl --context $KUBE_CONTEXT apply -f k8s/deployment.yaml"
+        //         sh """
+        //         kubectl apply -f k8s/deployment.yaml
+        //         kubectl set image deployment/cdas-project matter-service=$DOCKER_IMAGE_NAME:latest --namespace cdas-project
+        //         """
+        //     }
+        // }
     }
 }
