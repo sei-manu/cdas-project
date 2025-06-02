@@ -20,16 +20,6 @@ pipeline {
                 git branch: 'main', credentialsId: 'github-creds', url: 'https://github.com/sei-manu/cdas-project.git'
             }
         }
-
-        stage('Debug Kubeconfig') {
-            steps {
-                sh """
-                echo "KUBECONFIG: \$KUBECONFIG"
-                kubectl config view
-                kubectl get nodes
-                """
-            }
-        }
         stage('Build') {
             steps {
                 echo "Building..."
