@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE_NAME = "seimanu/matter-service"
-        KUBECONFIG = credentials('my-kubeconfig')
+        // KUBECONFIG = credentials('my-kubeconfig')
     }
     triggers {
         pollSCM '* * * * *'
